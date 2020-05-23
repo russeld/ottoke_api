@@ -17,6 +17,8 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
+$router->post('todos/swap', ['uses' => 'TodoController@swap']);
+
 $router->group(['prefix' => 'clients'], function() use ($router) {
     $router->get('/', ['uses' => 'ClientController@index']);
     $router->post('/',['uses' => 'ClientController@store']);
@@ -28,6 +30,7 @@ $router->group(['prefix' => 'clients'], function() use ($router) {
     $router->get('/{uuid}/todos', ['uses' => 'TodoController@getWithoutSheet']);
     $router->delete('/{uuid}/todos/{todoId}', ['uses' => 'TodoController@destroy']);
     $router->put('{uuid}/todos/{todoId}', ['uses' => 'TodoController@update']);
+    $router->post('todos/reorder', ['uses' => 'TodoController@reorder']);
 
     $router->group(['prefix' => '{uuid}/sheets'], function() use ($router) {
         $router->get('/', ['uses' => 'SheetController@index']);

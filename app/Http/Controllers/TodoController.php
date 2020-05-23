@@ -25,7 +25,7 @@ class TodoController extends Controller
             $query->where('title', 'like', '%' . $request->get('search') . '%');
         }
 
-        $todos = $query->orderBy('id', 'desc')->get();
+        $todos = $query->ordered()->get();
 
         return $todos;
     }
@@ -81,7 +81,7 @@ class TodoController extends Controller
             $query->where('title', 'like', '%' . $request->get('search') . '%');
         }
 
-        $todos = $query->orderBy('id', 'desc')->get();
+        $todos = $query->ordered()->get();
 
         return $todos;
     }
@@ -202,5 +202,11 @@ class TodoController extends Controller
         $todo->save();
 
         return $todo;
+    }
+
+    public function swap(Request $request)
+    {
+        Todo::setNewOrder($request->input('todos'));
+        return response($request->input('todos'));
     }
 }

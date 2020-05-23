@@ -4,14 +4,23 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
+use App\Interfaces\Sortable;
+use App\Traits\SortableTrait;
 
-class Todo extends Model
+class Todo extends Model implements Sortable
 {
-    protected $fillable = ['description', 'status', 'due_date', 'notes'];
+    use SortableTrait;
 
-    protected $hidden = ['sheet'];
+    protected $fillable = ['description', 'status', 'due_date', 'notes', 'priority'];
+
+    protected $hidden = ['sheet_id', 'client_id'];
 
     protected $appends = ['is_overdue', 'is_myday'];
+
+    protected $sortable = [
+        'order_column_name' => 'priority',
+        'sort_when_creating' => true
+    ];
 
     const PENDING = 0;
     const DONE = 1;
@@ -19,6 +28,11 @@ class Todo extends Model
     public function sheet()
     {
         return $this->belongsTo('App\Sheet');
+    }
+
+    public function client()
+    {
+        return $this->belongsTo('App\Client');
     }
 
     public function getStatus()
