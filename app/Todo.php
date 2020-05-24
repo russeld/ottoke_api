@@ -11,9 +11,9 @@ class Todo extends Model implements Sortable
 {
     use SortableTrait;
 
-    protected $fillable = ['description', 'status', 'due_date', 'notes', 'priority'];
+    protected $fillable = ['title', 'description', 'status', 'due_date', 'notes', 'priority', 'my_day', 'sheet_id'];
 
-    protected $hidden = ['sheet_id', 'client_id'];
+    protected $hidden = ['sheet', 'client'];
 
     protected $appends = ['is_overdue', 'is_myday'];
 

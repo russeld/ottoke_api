@@ -10,6 +10,11 @@ class Client extends Model
 
     public function sheets()
     {
-        return $this->hasMany("App\Sheet");
+        return $this->hasMany('App\Sheet');
+    }
+
+    public function todos()
+    {
+        return $this->hasMany('App\Todo');
     }
 }
