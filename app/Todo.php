@@ -22,6 +22,10 @@ class Todo extends Model implements Sortable
         'sort_when_creating' => true
     ];
 
+    protected $casts = [
+        'status' => 'boolean',
+    ];
+
     const PENDING = 0;
     const DONE = 1;
 
