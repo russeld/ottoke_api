@@ -17,16 +17,14 @@ class TodoController extends Controller
         $client = Client::where('uuid', $uuid)->firstOrFail();
         $query = $client->todos()->ordered();
 
-        if ($request->query('sheet_id')) {
-            $query->where('sheet_id', $request->query('sheet_id', null));
-        }
-
-        $query->where('title', 'like', '%' . $request->get('search') . '%');
-
         if ($request->query('my_day'))
         {
             $query->whereNotNull('my_day')->whereDate('my_day', Carbon::now());
+        } else {
+            $query->where('sheet_id', $request->query('sheet_id'));
         }
+
+        $query->where('title', 'like', '%' . $request->get('search') . '%');
 
         return $query->ordered()->get();
     }
