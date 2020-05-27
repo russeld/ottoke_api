@@ -15,7 +15,7 @@ class Todo extends Model implements Sortable
 
     protected $hidden = ['sheet', 'client'];
 
-    protected $appends = ['is_overdue', 'is_myday'];
+    protected $appends = ['is_overdue', 'is_myday', 'sheet_name'];
 
     protected $sortable = [
         'order_column_name' => 'priority',
@@ -42,6 +42,16 @@ class Todo extends Model implements Sortable
     public function getStatus()
     {
         return $this->status;
+    }
+
+    public function getSheetNameAttribute()
+    {
+        if ($this->attributes['sheet_id'])
+        {
+            return $this->sheet->name;
+        }
+
+        return 'Tasks';
     }
 
     public function getIsOverdueAttribute()
