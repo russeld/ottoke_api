@@ -6,10 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
 use App\Interfaces\Sortable;
 use App\Traits\SortableTrait;
+use App\Traits\HasTags;
 
 class Todo extends Model implements Sortable
 {
-    use SortableTrait;
+    use SortableTrait, HasTags;
 
     protected $fillable = ['title', 'description', 'status', 'due_date', 'notes', 'priority', 'my_day', 'sheet_id'];
 

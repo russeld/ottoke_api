@@ -3,9 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\HasTags;
 
 class Client extends Model
 {
+    use HasTags;
+
     protected $fillable = ['uuid'];
 
     public function sheets()

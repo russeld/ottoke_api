@@ -15,7 +15,9 @@ class TodoController extends Controller
     public function index(Request $request, $uuid)
     {
         $client = Client::where('uuid', $uuid)->firstOrFail();
-        $query = $client->todos()->ordered();
+        $query = $client->todos()
+            ->with(['tags:name'])
+            ->ordered();
 
         if ($request->query('my_day'))
         {
@@ -36,6 +38,11 @@ class TodoController extends Controller
         $todo->client()->associate($client);
         $todo->save();
 
+        if ($request->input('tags')) 
+        {
+            $todo->attachTags($request->input('tags'));
+        }
+
         return $todo;
     }
 
@@ -53,8 +60,10 @@ class TodoController extends Controller
         $todo = $client->todos()->where('id', $todoId)->firstOrFail();
 
         $todo->fill($request->all());
+        $todo->syncTags($request->input('tags'));
         $todo->save();
 
+        $todo->load(['tags:name']);
         return $todo;
     }
 

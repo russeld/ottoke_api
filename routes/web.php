@@ -28,6 +28,12 @@ $router->group(['prefix' => '{uuid}/todos'], function() use ($router) {
 });
 
 
+$router->group(['prefix' => '{uuid}/tags'], function() use ($router) {
+    $router->get('/', ['uses' => 'TagsController@index']);
+    $router->post('/', ['uses' => 'TagsController@store']);
+    $router->post('/tagId', ['uses' => 'TagsController@delete']);
+});
+
 $router->group(['prefix' => 'clients'], function() use ($router) {
     $router->get('/', ['uses' => 'ClientController@index']);
     $router->post('/',['uses' => 'ClientController@store']);
