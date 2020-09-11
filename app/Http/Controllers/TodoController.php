@@ -43,6 +43,8 @@ class TodoController extends Controller
             $todo->attachTags($request->input('tags'));
         }
 
+        $todo->load(['tags:name']);
+
         return $todo;
     }
 

@@ -9,6 +9,8 @@ use App\Tag;
 
 trait HasTags
 {
+    protected $queuedTags = [];
+    
     public static function getTagClassName(): string
     {
         return Tag::class;
