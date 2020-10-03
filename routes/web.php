@@ -17,6 +17,10 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
+// auth routes
+$router->post('auth/login', ['uses' => 'AuthController@login']);
+$router->post('auth/join', ['uses' => 'AuthController@join']);
+
 $router->post('todos/swap', ['uses' => 'TodoController@swap']);
 
 $router->group(['prefix' => '{uuid}/todos'], function() use ($router) {

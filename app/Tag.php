@@ -25,13 +25,13 @@ class Tag extends Model
                 return $value;
             }
 
-            return static::findOrCreateFromString($value);
+            return static::findFromString($value);
         });
 
         return is_string($values) ? $tags->first() : $tags;
     }
 
-    protected static function findOrCreateFromString(string $name)
+    protected static function findFromString(string $name)
     {
         return static::query()
             ->where('name', $name)

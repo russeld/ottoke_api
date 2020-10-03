@@ -64,4 +64,34 @@ trait HasTags
 
         return $this;
     }
+
+    public function detachTags($tags, string $type = null)
+    {
+        $tags = static::convertToTags($tags, $type);
+
+        collect($tags)
+            ->filter()
+            ->each(function (Tag $tag) {
+                $this->tags()->detach($tag);
+            });
+
+        return $this;
+    }
+
+    protected static function convertToTags($values)
+    {
+        return collect($values)->map(function ($value) {
+            if ($value instanceof Tag) {
+                if (isset($type) && $value->type != $type) {
+                    throw new InvalidArgumentException("Type was set to {$type} but tag is of type {$value->type}");
+                }
+
+                return $value;
+            }
+
+            $className = static::getTagClassName();
+
+            return $className::findFromString($value);
+        });
+    }
 }
