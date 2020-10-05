@@ -11,7 +11,12 @@ class TagsController extends Controller
 {
     public function index(Request $request, $uuid)
     {
-        $client = Client::where('uuid', $uuid)->firstOrFail();
+        $client = Client::where('uuid', $uuid)->first();
+
+        if (!$client) {
+            return response([]);
+        }
+
         return $client->tags->pluck('name');
     }
 
